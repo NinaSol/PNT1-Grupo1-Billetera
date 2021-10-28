@@ -15,7 +15,8 @@ namespace Billetera2.Context
         {
 
         }
-        public DbSet<Ingreso> Ingresos { get; set; }
+        public DbSet<Movimiento> Movimientos { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
     }
 
 }

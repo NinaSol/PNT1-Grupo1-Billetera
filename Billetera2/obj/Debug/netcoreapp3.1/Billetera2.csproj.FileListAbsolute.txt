@@ -91,3 +91,8 @@ C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\bin\Debug\netcoreapp3.1\Micro
 C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\bin\Debug\netcoreapp3.1\Microsoft.Bcl.HashCode.dll
 C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
 C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Movimiento\Index.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Movimiento\Create.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Create.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Index.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Movimientos.cshtml.g.cs
