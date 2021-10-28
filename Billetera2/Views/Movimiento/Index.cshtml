@@ -3,7 +3,9 @@
 @{ ViewData["Title"] = "Index"; }
 
 <h1>Index</h1>
-
+<p>
+    <a asp-action="Create" asp-route-id="@ViewBag.UsuarioID">Create Nuevo Movimiento</a>
+</p>
 
 <table class="table">
     <thead>
@@ -17,7 +19,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Fecha)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +34,6 @@
     <td>
         @Html.DisplayFor(modelItem => item.Fecha)
     </td>
-    <td><a asp-action="Create" asp-route-id="@item.UsuarioId">Create Nuevo Movimiento</a></td>
 </tr>}
     </tbody>
 </table>

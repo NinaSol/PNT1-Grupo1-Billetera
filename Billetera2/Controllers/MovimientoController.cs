@@ -17,13 +17,12 @@ namespace Billetera2.Controllers
             _context = context;
         }
 
-        public IActionResult Index(Guid usuarioID)
+        public IActionResult Index(Guid? id)
         {
-            // TODO: Tomar la lista de movimientos que realizo un usuarioID y devolverla al View()
-            //       Cuando se ejecute el Create Nuevo Movimiento se tiene que hacer usando el usuarioID
-
-            Console.WriteLine(usuarioID);
-            return View(_context.Movimientos.Where(m => m.UsuarioId == usuarioID).ToList());
+  
+            List<Movimiento> movimientos = _context.Movimientos.Where(m => m.UsuarioId == id).ToList();
+            ViewBag.UsuarioID = id;
+            return View(movimientos);
         }
 
         public IActionResult Create(Guid usuarioId)
@@ -43,7 +42,7 @@ namespace Billetera2.Controllers
                 movimiento.Id = Guid.NewGuid();
                 _context.Add(movimiento);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), new { id = movimiento.UsuarioId });
             }
 
             return View(movimiento);
