@@ -58,5 +58,117 @@ namespace Billetera2.Controllers
             return View(usuario);
         }
 
+        public IActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user =  _context.Usuarios.FirstOrDefault(m => m.Id == id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            var user = await _context.Usuarios.FindAsync(id);
+            _context.Usuarios.Remove(user);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index), new { id = user.Id });
+        }
+
+
+      
+        public async Task<IActionResult> Details(Guid? id, string otroCampo)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var usuario = await _context.Usuarios
+                                            .Include(usuario => usuario.Movimientos)
+                                            .FirstOrDefaultAsync(m => m.Id == id);
+            double mTotal = 0;
+            
+            foreach (var mov in usuario.Movimientos) {
+                mTotal += mov.Monto;
+            }
+            
+
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.total = mTotal;
+            ViewData["total"] = mTotal;
+            return View(usuario);
+        }
+
+
+
+        public async Task<IActionResult> Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Usuarios.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+
+ 
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Apellido")] Usuario user)
+        {
+            if (id != user.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UsuarioExists(user.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
+        }
+
+        private bool UsuarioExists(Guid id)
+        {
+            return _context.Usuarios.Any(e => e.Id == id);
+        }
     }
 }

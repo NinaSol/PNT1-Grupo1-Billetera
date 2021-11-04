@@ -40,7 +40,7 @@ namespace Billetera2.Migrations
                         .HasColumnType("nvarchar(3)")
                         .HasMaxLength(3);
 
-                    b.Property<Guid?>("UsuarioId")
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -71,9 +71,11 @@ namespace Billetera2.Migrations
 
             modelBuilder.Entity("Billetera2.Models.Movimiento", b =>
                 {
-                    b.HasOne("Billetera2.Models.Usuario", null)
+                    b.HasOne("Billetera2.Models.Usuario", "Usuario")
                         .WithMany("Movimientos")
-                        .HasForeignKey("UsuarioId");
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

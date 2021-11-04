@@ -96,3 +96,8 @@ C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor
 C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Create.cshtml.g.cs
 C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Index.cshtml.g.cs
 C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Movimientos.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Movimiento\Delete.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Delete.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Details.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Edit.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Movimiento\Edit.cshtml.g.cs
