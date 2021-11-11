@@ -25,6 +25,12 @@ namespace Billetera2.Controllers
             return View(_context.Usuarios.ToList());
         }
 
+        public IActionResult Index1()
+        {
+            return View();
+        
+    }
+
         public IActionResult Create()
         {
             return View();
@@ -46,14 +52,15 @@ namespace Billetera2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nombre,Apellido")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("Id,Nombre,Contrasenia")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
                 usuario.Id = Guid.NewGuid();
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = usuario.Id });
+
             }
             return View(usuario);
         }
@@ -143,7 +150,7 @@ namespace Billetera2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Apellido")] Usuario user)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Contrasenia")] Usuario user)
         {
             if (id != user.Id)
             {
@@ -177,5 +184,31 @@ namespace Billetera2.Controllers
         {
             return _context.Usuarios.Any(e => e.Id == id);
         }
+
+        private bool UsuarioNameExists(string nombre)
+        {
+            return _context.Usuarios.Any(e => e.Nombre == nombre);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index1([Bind("Id,Nombre,Contrasenia")] Usuario usuario)
+        {
+            if (ModelState.IsValid)
+            {
+                usuario.Id = Guid.NewGuid();
+                if (UsuarioNameExists(usuario.Nombre))
+                {
+                    var user = _context.Usuarios.FirstOrDefault(m => m.Nombre == usuario.Nombre);
+                    if (usuario.Contrasenia == user.Contrasenia)
+                    {
+                        return RedirectToAction(nameof(Details),new { id=user.Id});
+
+                    }
+                }
+            }
+            return View();
+        }
     }
+
 }

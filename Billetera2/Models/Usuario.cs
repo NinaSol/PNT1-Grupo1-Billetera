@@ -17,8 +17,9 @@ namespace Billetera2.Models
         [MaxLength(180, ErrorMessage = "El maximo permitido para el {0} es {1}")]
         public string Nombre { get; set; }
 
-        [MaxLength(180, ErrorMessage = "El maximo permitido para el {0} es {1}")]
-        public string Apellido { get; set; }
+        [MaxLength(8, ErrorMessage = "El maximo permitido para el {0} es {1}")]
+        public string Contrasenia { get; set; }
+
 
         public IEnumerable<Movimiento> Movimientos { get; set; }
 
