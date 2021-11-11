@@ -41,8 +41,35 @@ namespace Billetera2.Controllers
             if (ModelState.IsValid)
             {
                 movimiento.Id = Guid.NewGuid();
-                _context.Add(movimiento);
+                var usuario = await _context.Usuarios
+                                           .Include(usuario => usuario.Movimientos)
+                                           .FirstOrDefaultAsync(m => m.Id == movimiento.UsuarioId);
+                double mTotal = 0;
+                foreach (var mov in usuario.Movimientos)
+                {
+                    if (mov.TipoMovimiento == Movimiento.Tipo.Egreso)
+                    {
+                        mTotal -= mov.Monto;
+                    }
+                    else
+                    {
+                        mTotal += mov.Monto;
+                    }
+                }
+                if (movimiento.TipoMovimiento == Movimiento.Tipo.Egreso)
+                {
+                    if (movimiento.Monto <= mTotal)
+                    {
+                        _context.Add(movimiento);
+
+                    }
+                }
+                else
+                {
+                    _context.Add(movimiento);
+                }
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index), new { id = movimiento.UsuarioId });
             }
 

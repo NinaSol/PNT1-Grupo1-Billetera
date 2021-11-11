@@ -5454,23 +5454,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Laburo\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Nina\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Laburo\\Source\\Repos\\Billetera2\\Billetera2\\Billetera2.csproj",
+      "projectUniqueName": "C:\\Users\\Nina\\Source\\Repos\\NinaSol\\PNT1-Grupo1-Billetera\\Billetera2\\Billetera2.csproj",
       "projectName": "Billetera2",
-      "projectPath": "C:\\Users\\Laburo\\Source\\Repos\\Billetera2\\Billetera2\\Billetera2.csproj",
-      "packagesPath": "C:\\Users\\Laburo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Laburo\\Source\\Repos\\Billetera2\\Billetera2\\obj\\",
+      "projectPath": "C:\\Users\\Nina\\Source\\Repos\\NinaSol\\PNT1-Grupo1-Billetera\\Billetera2\\Billetera2.csproj",
+      "packagesPath": "C:\\Users\\Nina\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Nina\\Source\\Repos\\NinaSol\\PNT1-Grupo1-Billetera\\Billetera2\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Laburo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Nina\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5537,7 +5533,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

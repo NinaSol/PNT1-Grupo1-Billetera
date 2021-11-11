@@ -31,8 +31,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="TipoMovimiento" class="control-label"></label>
-                <input asp-for="TipoMovimiento" class="form-control" />
-                <span asp-validation-for="TipoMovimiento" class="text-danger"></span>
+              
+                @Html.DropDownListFor(model => model.TipoMovimiento, Enum.GetNames(typeof(Movimiento.Tipo)).Select(e => new SelectListItem { Text = e }))
+
                 <input asp-for="UsuarioId" hidden value="@Context.Request.Path.Value.Split("/").Last()" class="form-control" />
             </div>
             <div class="form-group">

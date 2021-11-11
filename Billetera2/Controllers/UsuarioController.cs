@@ -100,7 +100,14 @@ namespace Billetera2.Controllers
             double mTotal = 0;
             
             foreach (var mov in usuario.Movimientos) {
-                mTotal += mov.Monto;
+                if (mov.TipoMovimiento == Movimiento.Tipo.Egreso)
+                {
+                    mTotal -= mov.Monto;
+                }
+                else
+                {
+                    mTotal += mov.Monto;
+                }
             }
             
 

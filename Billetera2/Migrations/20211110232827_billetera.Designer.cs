@@ -4,14 +4,16 @@ using Billetera2.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Billetera2.Migrations
 {
     [DbContext(typeof(BilleteraDatabaseContext))]
-    partial class BilleteraDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211110232827_billetera")]
+    partial class billetera
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,8 +37,10 @@ namespace Billetera2.Migrations
                     b.Property<double>("Monto")
                         .HasColumnType("float");
 
-                    b.Property<int>("TipoMovimiento")
-                        .HasColumnType("int");
+                    b.Property<string>("TipoMovimiento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(3)")
+                        .HasMaxLength(3);
 
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");

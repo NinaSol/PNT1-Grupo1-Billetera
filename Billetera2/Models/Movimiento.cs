@@ -10,6 +10,16 @@ namespace Billetera2.Models
     public class Movimiento
     {
         
+        public enum Tipo
+        {
+
+            Ingreso,
+            Egreso
+
+
+
+        }
+
         [Key]
         public Guid Id { get; set; }
 
@@ -25,9 +35,10 @@ namespace Billetera2.Models
         [DataType(DataType.Date)]
         public DateTime Fecha { get; set; }
 
-        [Required(ErrorMessage = "El {0} es requerido")]
-        [MaxLength(3, ErrorMessage = "El maximo permitido para el {0} es {1}")]
-        public string TipoMovimiento { get; set; }
+        //[MaxLength(3, ErrorMessage = "El maximo permitido para el {0} es {1}")]
+        //[RequiredEnumField(ErrorMessage = "Address type is required.")]
+        public Tipo TipoMovimiento { get; set; }
+
 
         [Required]
         [ForeignKey(nameof(Usuario))]

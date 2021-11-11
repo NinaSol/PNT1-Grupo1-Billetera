@@ -4,14 +4,16 @@ using Billetera2.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Billetera2.Migrations
 {
     [DbContext(typeof(BilleteraDatabaseContext))]
-    partial class BilleteraDatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20211111001848_billeteraa")]
+    partial class billeteraa
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
