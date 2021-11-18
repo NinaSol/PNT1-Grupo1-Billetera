@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Billetera2.Migrations
 {
-    public partial class Bile1 : Migration
+    public partial class Bille1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace Billetera2.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Nombre = table.Column<string>(maxLength: 180, nullable: true),
-                    Apellido = table.Column<string>(maxLength: 180, nullable: true)
+                    Contrasenia = table.Column<string>(maxLength: 8, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,7 +28,7 @@ namespace Billetera2.Migrations
                     Monto = table.Column<double>(nullable: false),
                     Descripcion = table.Column<string>(maxLength: 180, nullable: true),
                     Fecha = table.Column<DateTime>(nullable: false),
-                    TipoMovimiento = table.Column<string>(maxLength: 3, nullable: false),
+                    TipoMovimiento = table.Column<int>(nullable: false),
                     UsuarioId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>

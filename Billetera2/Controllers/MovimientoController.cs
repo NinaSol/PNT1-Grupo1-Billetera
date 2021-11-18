@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Billetera2.Models;
 using Billetera2.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Billetera2.Controllers
 {
@@ -18,18 +20,30 @@ namespace Billetera2.Controllers
             _context = context;
         }
 
-        public IActionResult Index(Guid? id)
+        public IActionResult Index()
         {
-  
-            List<Movimiento> movimientos = _context.Movimientos.Where(m => m.UsuarioId == id).ToList();
-            ViewBag.UsuarioID = id;
+            var session = HttpContext.Session.GetString("usuarioSession");
+            if (session == null)
+            {
+                return NotFound();
+            }
+            var usuario = JsonConvert.DeserializeObject<Usuario>(session);
+            List<Movimiento> movimientos = _context.Movimientos.Where(m => m.UsuarioId == usuario.Id).ToList();
+            ViewBag.UsuarioID = usuario.Id;
             return View(movimientos);
         }
 
-        public IActionResult Create(Guid usuarioId)
+        public IActionResult Create()
         {
+            var session = HttpContext.Session.GetString("usuarioSession");
+            if (session == null)
+            {
+                return NotFound();
+            }
+            var usuario = JsonConvert.DeserializeObject<Usuario>(session);
+
             Movimiento movimiento = new Movimiento();
-            movimiento.UsuarioId = usuarioId;
+            movimiento.UsuarioId = usuario.Id;
 
             return View(movimiento);
         }
@@ -41,11 +55,16 @@ namespace Billetera2.Controllers
             if (ModelState.IsValid)
             {
                 movimiento.Id = Guid.NewGuid();
-                var usuario = await _context.Usuarios
-                                           .Include(usuario => usuario.Movimientos)
-                                           .FirstOrDefaultAsync(m => m.Id == movimiento.UsuarioId);
+                var session = HttpContext.Session.GetString("usuarioSession");
+                if (session == null)
+                {
+                    return NotFound();
+                }
+                var usuario = JsonConvert.DeserializeObject<Usuario>(session);
+                var movimientos = _context.Movimientos
+                                            .Where(m => m.UsuarioId == usuario.Id);
                 double mTotal = 0;
-                foreach (var mov in usuario.Movimientos)
+                foreach (var mov in movimientos)
                 {
                     if (mov.TipoMovimiento == Movimiento.Tipo.Egreso)
                     {
@@ -70,7 +89,7 @@ namespace Billetera2.Controllers
                 }
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index), new { id = movimiento.UsuarioId });
+                return RedirectToAction(nameof(Index));
             }
 
             return View(movimiento);
@@ -100,7 +119,7 @@ namespace Billetera2.Controllers
             var movimiento = await _context.Movimientos.FindAsync(id);
             _context.Movimientos.Remove(movimiento);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index), new { id = movimiento.UsuarioId });
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(Guid? id)

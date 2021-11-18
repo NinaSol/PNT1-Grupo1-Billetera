@@ -205,3 +205,4 @@ C:\Users\Nina\Source\Repos\NinaSol\PNT1-Grupo1-Billetera\Billetera2\obj\Debug\ne
 C:\Users\Nina\Source\Repos\NinaSol\PNT1-Grupo1-Billetera\Billetera2\obj\Debug\netcoreapp3.1\Billetera2.pdb
 C:\Users\Nina\Source\Repos\NinaSol\PNT1-Grupo1-Billetera\Billetera2\obj\Debug\netcoreapp3.1\Billetera2.genruntimeconfig.cache
 C:\Users\Nina\Source\Repos\NinaSol\PNT1-Grupo1-Billetera\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Index1.cshtml.g.cs
+C:\Users\Laburo\Source\Repos\Billetera2\Billetera2\obj\Debug\netcoreapp3.1\Razor\Views\Usuario\Login.cshtml.g.cs

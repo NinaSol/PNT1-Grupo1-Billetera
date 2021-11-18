@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Billetera2.Migrations
 {
     [DbContext(typeof(BilleteraDatabaseContext))]
-    [Migration("20211111001848_billeteraa")]
-    partial class billeteraa
+    [Migration("20211117224104_Bille1")]
+    partial class Bille1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,9 +56,9 @@ namespace Billetera2.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Apellido")
-                        .HasColumnType("nvarchar(180)")
-                        .HasMaxLength(180);
+                    b.Property<string>("Contrasenia")
+                        .HasColumnType("nvarchar(8)")
+                        .HasMaxLength(8);
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(180)")

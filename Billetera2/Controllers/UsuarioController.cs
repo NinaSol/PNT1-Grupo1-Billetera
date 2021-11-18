@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Billetera2.Context;
 using Billetera2.Models;
 using Billetera2.ViewModels;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace Billetera2.Controllers
 {
@@ -25,25 +27,32 @@ namespace Billetera2.Controllers
             return View(_context.Usuarios.ToList());
         }
 
-        public IActionResult Index1()
+        public IActionResult Login()
         {
             return View();
         
-    }
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("usuarioSession");
+            return RedirectToAction("Index", "Home");
+
+        }
 
         public IActionResult Create()
         {
             return View();
         }
 
-        public async Task<IActionResult> Movimientos(Guid id)
+        public IActionResult Movimientos(Guid id)
         {
-            if (id == null)
+            var session = HttpContext.Session.GetString("usuarioSession");
+            if (session == null)
             {
                 return NotFound();
             }
-
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(m => m.Id == id);
+            var usuario = JsonConvert.DeserializeObject<Usuario>(session);
             Movimiento movimiento = new Movimiento();
             movimiento.UsuarioId = id;
 
@@ -59,20 +68,23 @@ namespace Billetera2.Controllers
                 usuario.Id = Guid.NewGuid();
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), new { id = usuario.Id });
+                HttpContext.Session.SetString("usuarioSession", JsonConvert.SerializeObject(usuario));
+                return RedirectToAction(nameof(Details));
 
             }
             return View(usuario);
         }
 
-        public IActionResult Delete(Guid? id)
+        public IActionResult Delete()
         {
-            if (id == null)
+            var session = HttpContext.Session.GetString("usuarioSession");
+            if (session == null)
             {
                 return NotFound();
             }
+            var usuario = JsonConvert.DeserializeObject<Usuario>(session);
 
-            var user =  _context.Usuarios.FirstOrDefault(m => m.Id == id);
+            var user =  _context.Usuarios.FirstOrDefault(m => m.Id == usuario.Id);
             if (user == null)
             {
                 return NotFound();
@@ -84,9 +96,10 @@ namespace Billetera2.Controllers
         
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed()
         {
-            var user = await _context.Usuarios.FindAsync(id);
+            var usuario = JsonConvert.DeserializeObject<Usuario>(HttpContext.Session.GetString("usuarioSession"));
+            var user = await _context.Usuarios.FindAsync(usuario.Id);
             _context.Usuarios.Remove(user);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index), new { id = user.Id });
@@ -94,19 +107,21 @@ namespace Billetera2.Controllers
 
 
       
-        public async Task<IActionResult> Details(Guid? id, string otroCampo)
+        public IActionResult Details()
         {
-            if (id == null)
+            var session = HttpContext.Session.GetString("usuarioSession");
+            if (session == null)
             {
                 return NotFound();
             }
+            var usuario = JsonConvert.DeserializeObject<Usuario>(session);
+            
 
-            var usuario = await _context.Usuarios
-                                            .Include(usuario => usuario.Movimientos)
-                                            .FirstOrDefaultAsync(m => m.Id == id);
+            var movimientos =  _context.Movimientos
+                                            .Where(m => m.UsuarioId == usuario.Id);
             double mTotal = 0;
             
-            foreach (var mov in usuario.Movimientos) {
+            foreach (var mov in movimientos) {
                 if (mov.TipoMovimiento == Movimiento.Tipo.Egreso)
                 {
                     mTotal -= mov.Monto;
@@ -130,19 +145,15 @@ namespace Billetera2.Controllers
 
 
 
-        public async Task<IActionResult> Edit(Guid? id)
+        public IActionResult Edit()
         {
-            if (id == null)
+            var session = HttpContext.Session.GetString("usuarioSession");
+            if (session == null)
             {
                 return NotFound();
             }
-
-            var user = await _context.Usuarios.FindAsync(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            return View(user);
+            var usuario = JsonConvert.DeserializeObject<Usuario>(session);
+            return View(usuario);
         }
 
  
@@ -150,12 +161,14 @@ namespace Billetera2.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nombre,Contrasenia")] Usuario user)
+        public async Task<IActionResult> Edit([Bind("Id,Nombre,Contrasenia")] Usuario user)
         {
-            if (id != user.Id)
+            var session = HttpContext.Session.GetString("usuarioSession");
+            if (session == null)
             {
                 return NotFound();
             }
+            var usuario = JsonConvert.DeserializeObject<Usuario>(session);
 
             if (ModelState.IsValid)
             {
@@ -175,7 +188,7 @@ namespace Billetera2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details));
             }
             return View(user);
         }
@@ -192,7 +205,7 @@ namespace Billetera2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index1([Bind("Id,Nombre,Contrasenia")] Usuario usuario)
+        public IActionResult Login([Bind("Id,Nombre,Contrasenia")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -202,7 +215,8 @@ namespace Billetera2.Controllers
                     var user = _context.Usuarios.FirstOrDefault(m => m.Nombre == usuario.Nombre);
                     if (usuario.Contrasenia == user.Contrasenia)
                     {
-                        return RedirectToAction(nameof(Details),new { id=user.Id});
+                        HttpContext.Session.SetString("usuarioSession", JsonConvert.SerializeObject(user));
+                        return RedirectToAction(nameof(Details));
 
                     }
                 }

@@ -29,6 +29,7 @@ namespace Billetera2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for nonessential cookies is needed for a given request.
@@ -43,6 +44,7 @@ namespace Billetera2
            ReferenceLoopHandling.Ignore)
 
            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(15));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +62,7 @@ namespace Billetera2
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
