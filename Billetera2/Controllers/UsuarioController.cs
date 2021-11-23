@@ -63,7 +63,7 @@ namespace Billetera2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombre,Contrasenia")] Usuario usuario)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && !String.IsNullOrEmpty(usuario.Nombre))
             {
                 usuario.Id = Guid.NewGuid();
                 _context.Add(usuario);

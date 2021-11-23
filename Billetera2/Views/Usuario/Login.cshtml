@@ -5,7 +5,7 @@
 *@
 @{
 }
-<h4>Usuario</h4>
+<h4>Accede</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -13,16 +13,16 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
+                <input asp-for="Nombre" class="form-control"  required/>
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Contrasenia" class="control-label"></label>
-                <input asp-for="Contrasenia" type="password" class="form-control" />
+                <label asp-for="Contrasenia" class="control-label">Contraseña</label>
+                <input asp-for="Contrasenia" type="password" class="form-control" required />
                 <span asp-validation-for="Contrasenia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Sign in" class="btn btn-primary" />
+                <input type="submit" value="Login" class="btn btn-primary" />
             </div>
         </form>
     </div>
