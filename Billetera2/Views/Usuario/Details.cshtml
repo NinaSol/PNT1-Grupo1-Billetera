@@ -3,24 +3,68 @@
 @{ ViewData["Title"] = "Details"; }
 
 
-<div>
-    <h4>Usuario</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-        <dt class="col-sm-2">
-            Total: $@ViewData["total"].ToString()
-        </dt>
-    </dl>
+<div class="justify-content-center">
+    @*<h4>Usuario</h4*@
+
+    <div class="card flex">
+        <h5 class="card-header">Hola, @Html.DisplayNameFor(model => model.Nombre)!</h5>
+        <div class="card-body">
+            <h1 class="display-5 card-title text-center">Tu balance actual es de</h1>
+            <h1 class="display-3 text-center">$@ViewData["total"].ToString()</h1>
+            <a asp-controller="Movimiento" asp-action="Index" class="btn btn-primary">Ver todos mis movimientos</a>
+        </div>
+    </div>
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Ultimos Movimientos
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Monto</th>
+                                <th scope="col">Descripcion</th>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var mov in @ViewData["movimientos"] as IEnumerable<Billetera2.Models.Movimiento>)
+                            {
+                            <tr>
+                                <td>
+                                    $@mov.Monto
+                                </td>
+                                <td>
+                                    @mov.Descripcion
+                                </td>
+                                <td>
+                                    @mov.TipoMovimiento
+                                </td>
+                                <td>
+                                    @mov.Fecha
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
+
+
+
+<!--<div>
     <a class="btn btn-primary" asp-controller="Movimiento" asp-action="Index">Ver Movimientos</a> 
-    <a class="btn btn-primary" asp-action="Edit">Editar credenciales</a> 
+    <a class="btn btn-primary" asp-action="Edit">Editar credenciales</a>--> 
 
     <!--<a asp-action="Index">Back to List</a>-->
-</div>
+<!--</div>-->

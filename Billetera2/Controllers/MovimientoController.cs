@@ -33,6 +33,19 @@ namespace Billetera2.Controllers
             return View(movimientos);
         }
 
+        public List<Movimiento> GetAllMovimientos()
+        {
+            var session = HttpContext.Session.GetString("usuarioSession");
+            if (session == null)
+            {
+                return new List<Movimiento>();
+            }
+            var usuario = JsonConvert.DeserializeObject<Usuario>(session);
+            List<Movimiento> movimientos = _context.Movimientos.Where(m => m.UsuarioId == usuario.Id).ToList();
+            ViewBag.UsuarioID = usuario.Id;
+            return movimientos.ToList();
+        }
+
         public IActionResult Create()
         {
             var session = HttpContext.Session.GetString("usuarioSession");

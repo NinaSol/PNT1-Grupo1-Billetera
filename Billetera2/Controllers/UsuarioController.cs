@@ -118,7 +118,7 @@ namespace Billetera2.Controllers
             
 
             var movimientos =  _context.Movimientos
-                                            .Where(m => m.UsuarioId == usuario.Id);
+                                            .Where(m => m.UsuarioId == usuario.Id).ToList();
             double mTotal = 0;
             
             foreach (var mov in movimientos) {
@@ -139,6 +139,7 @@ namespace Billetera2.Controllers
             }
 
             ViewBag.total = mTotal;
+            ViewData["movimientos"] = movimientos.Take(5);
             ViewData["total"] = mTotal;
             return View(usuario);
         }

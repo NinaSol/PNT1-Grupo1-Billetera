@@ -2,51 +2,148 @@
 
 @{ ViewData["Title"] = "Index"; }
 
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
 <h1>Lista de movimientos</h1>
 <br />
+
+
+<div class="justify-content-center">
+    <div class="flex" id='myDiv'></div>
+</div>
 
 <p>
     <a class="btn btn-primary" asp-action="Create" asp-route-id="@ViewBag.UsuarioID">Create Nuevo Movimiento</a>
 </p>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Monto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoMovimiento)
-            </th>
-<th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                $@Html.DisplayFor(modelItem => item.Monto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoMovimiento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Editar movimiento</a> 
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Eliminar movimiento</a>
-            </td>
-        </tr>}
-    </tbody>
+<table id="table">
 </table>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('#table').bootstrapTable({
+            url: '/Movimiento/GetAllMovimientos',
+            pageSize: '5',
+            search: true,
+            pagination: true,
+            filterControl: true,
+            filterShowClear: true,
+            method: 'get',
+            columns: [
+                {
+                    field: 'monto',
+                    title: 'Monto',
+                    formatter: precio,
+                    sortable: true
+                },
+                {
+                    field: 'descripcion',
+                    title: 'Descripcion',
+                    filterControl: 'input',
+                    sortable: true
+                },
+                {
+                    field: 'tipoMovimiento',
+                    title: 'Tipo Movimiento',
+                    filterControl: 'select',
+                    formatter: tipo,
+                    sortable: true
+                },
+                {
+                    field: 'fecha',
+                    title: 'Fecha',
+                    sortable: true
+                },
+                {
+                    field: 'id',
+                    title: 'Acciones',
+                    formatter: operateFormatter
+                }
+            ]
+        })
+    })
+
+
+
+    function operateFormatter(value, row, index) {
+        return [
+            `<a class="btn btn-primary" href="Movimiento/Edit/${value}" >Editar</a>`,
+            `<a class="btn btn-danger ml-3" href="Movimiento/Delete/${value}">Eliminar</a>`
+        ].join('');
+
+
+        window.operateEvents = {
+            'click .edit': function (e, value, row, index) {
+            },
+            'click .remove': function (e, value, row, index) {
+            }
+        }
+    };
+
+
+
+    function precio(value) {
+        return `${value}`
+    }
+
+    function tipo(value) {
+        if (value == "1") {
+            return `Egreso`
+        } else {
+            return `Ingreso`
+        }
+    }
+
+
+</script>
+
+<script>
+
+    var layout = {
+        height: 400,
+        width: 500
+    };
+
+   
+
+
+    //make the fetch and return response data as json
+    async function getData() {
+        let url = '/Movimiento/GetAllMovimientos';
+        try {
+            let resp = await fetch(url);
+            return await resp.json();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    //do whatever you want with the data response
+    async function myFunc() {
+        let data = await getData();
+        var ingreso = 0;
+        var egreso = 0;
+
+        data.map(e => {
+            if (e.tipoMovimiento == "1") {
+                egreso += e.monto;
+            } else {
+                ingreso += e.monto;
+            }
+        })
+
+        var cosas = {
+            values: [ingreso, egreso],
+            labels: ["Ingresos", 'Egresos'],
+            type: 'pie'
+        }
+        //do some stuff with your data here
+        Plotly.newPlot('myDiv', [cosas], layout);
+    }
+
+    //call the function
+    myFunc();
+</script>

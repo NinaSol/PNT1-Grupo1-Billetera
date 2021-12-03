@@ -5,10 +5,10 @@
 *@
 @{
 }
-<h4>Accede</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<h4 class="text-center">Billetera</h4>
+
+<div class="row justify-content-center">
+    <div class="col-md-4 flex-column">
         <form asp-action="Login">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -22,7 +22,7 @@
                 <span asp-validation-for="Contrasenia" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-primary" />
+                <input type="submit" value="Acceder" class="btn btn-primary" />
             </div>
         </form>
     </div>

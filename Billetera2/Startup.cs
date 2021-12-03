@@ -29,7 +29,7 @@ namespace Billetera2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            
+            services.AddRazorPages();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for nonessential cookies is needed for a given request.
@@ -64,7 +64,7 @@ namespace Billetera2
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
-
+            app.UseBrowserLink();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
