@@ -30,6 +30,7 @@ namespace Billetera2.Controllers
             var usuario = JsonConvert.DeserializeObject<Usuario>(session);
             List<Movimiento> movimientos = _context.Movimientos.Where(m => m.UsuarioId == usuario.Id).ToList();
             ViewBag.UsuarioID = usuario.Id;
+
             return View(movimientos);
         }
 

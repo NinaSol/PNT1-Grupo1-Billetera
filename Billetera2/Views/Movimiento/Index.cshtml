@@ -11,7 +11,7 @@
 <br />
 
 
-<div class="justify-content-center">
+<div id="pie" class="justify-content-center">
     <div style="display:flex;">
         <div id='myDiv' class="ml-auto mr-auto"></div>
     </div>
@@ -58,6 +58,7 @@
                 {
                     field: 'fecha',
                     title: 'Fecha',
+                    formatter: dateFormat,
                     sortable: true
                 },
                 {
@@ -69,7 +70,9 @@
         })
     })
 
-
+    function dateFormat(value, row, index) {
+        return moment(value).format('DD/MM/YYYY');
+    }
 
     function operateFormatter(value, row, index) {
         return [
@@ -130,6 +133,10 @@
         let data = await getData();
         var ingreso = 0;
         var egreso = 0;
+
+        if (data.length == 0) {
+            $("#pie").hide();
+        }
 
         data.map(e => {
             if (e.tipoMovimiento == "1") {
