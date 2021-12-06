@@ -1,21 +1,24 @@
 ﻿@model IEnumerable<Billetera2.Models.Movimiento>
 
-@{ ViewData["Title"] = "Index"; }
+@{ ViewData["Title"] = "Mis Movimientos"; }
+
 
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
-<h1>Lista de movimientos</h1>
+<h1>Mis Movimientos</h1>
 <br />
 
 
 <div class="justify-content-center">
-    <div class="flex" id='myDiv'></div>
+    <div style="display:flex;">
+        <div id='myDiv' class="ml-auto mr-auto"></div>
+    </div>
 </div>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create" asp-route-id="@ViewBag.UsuarioID">Create Nuevo Movimiento</a>
+<p style="display:flex;">
+    <a class="btn btn-primary  ml-auto" asp-action="Create" asp-route-id="@ViewBag.UsuarioID">Create Nuevo Movimiento</a>
 </p>
 
 <table id="table">
@@ -104,10 +107,11 @@
 
     var layout = {
         height: 400,
-        width: 500
+        width: 500,
+        paper_bgcolor: "transparent"
     };
 
-   
+
 
 
     //make the fetch and return response data as json

@@ -1,13 +1,13 @@
 ﻿@model Billetera2.Models.Usuario
 
-@{ ViewData["Title"] = "Details"; }
+@{ ViewData["Title"] = "Resumen"; }
 
 
 <div class="justify-content-center">
     @*<h4>Usuario</h4*@
 
     <div class="card flex">
-        <h5 class="card-header">Hola, @Html.DisplayNameFor(model => model.Nombre)!</h5>
+        <h5 class="card-header">Hola, @Model.Nombre!</h5>
         <div class="card-body">
             <h1 class="display-5 card-title text-center">Tu balance actual es de</h1>
             <h1 class="display-3 text-center">$@ViewData["total"].ToString()</h1>
